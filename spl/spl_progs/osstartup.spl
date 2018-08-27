@@ -1,13 +1,31 @@
+// INIT Program
+
 loadi(65,7);
 loadi(66,8);
+
+// INT10
+
 loadi(22,35);
 loadi(23,36);
+
+// Exception Handler
+
 loadi(2, 15);
 loadi(3, 16);
+
+// Library Code
+
 loadi(63,13);
 loadi(64,14);
+
+// Timer Interrupt
+
+loadi(4, 17);
+loadi(5, 18);
+
 PTBR = PAGE_TABLE_BASE;
 PTLR = 10;
+
 //Library
 [PTBR+0] = 63;
 [PTBR+1] = "0100";
@@ -37,4 +55,7 @@ PTLR = 10;
 [PTBR+19] = "0110";
 
 SP = 8*512;
+
 [76*512] = [65 * 512 + 1];
+
+ireturn;
