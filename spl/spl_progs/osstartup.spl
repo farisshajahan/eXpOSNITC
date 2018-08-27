@@ -8,6 +8,11 @@ loadi(66,8);
 loadi(22,35);
 loadi(23,36);
 
+// INT7
+
+loadi(16,29);
+loadi(17,30);
+
 // Exception Handler
 
 loadi(2, 15);
