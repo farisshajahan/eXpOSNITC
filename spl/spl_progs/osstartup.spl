@@ -58,4 +58,8 @@ SP = 8*512;
 
 [76*512] = [65 * 512 + 1];
 
+[PROCESS_TABLE + 11] = 80;
+[PROCESS_TABLE + 1] = 0;
+[SYSTEM_STATUS_TABLE + 1] = 0;
+
 ireturn;
