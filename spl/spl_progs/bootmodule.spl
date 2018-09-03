@@ -3,6 +3,10 @@
 loadi(65,7);
 loadi(66,8);
 
+// User Program
+
+loadi(83,70);
+
 // INT10
 
 loadi(22,35);
@@ -17,6 +21,11 @@ loadi(17,30);
 
 loadi(2, 15);
 loadi(3, 16);
+
+// MODULE 5
+
+loadi(50,63);
+loadi(51,64);
 
 // Library Code
 
@@ -61,6 +70,39 @@ PTLR = 10;
 [PTBR+18] = 77;
 [PTBR+19] = "0110";
 
+// PAGE TABLE FOR User Program
+
+PTBR = PAGE_TABLE_BASE+40;
+PTLR = 10;
+
+//Library
+[PTBR+0] = 63;
+[PTBR+1] = "0100";
+[PTBR+2] = 64;
+[PTBR+3] = "0100";
+
+//Heap
+[PTBR+4] = 84;
+[PTBR+5] = "0110";
+[PTBR+6] = 85;
+[PTBR+7] = "0110";
+
+//Code
+[PTBR+8] = 83;
+[PTBR+9] = "0100";
+[PTBR+10] = -1;
+[PTBR+11] = "0000";
+[PTBR+12] = -1;
+[PTBR+13] = "0000";
+[PTBR+14] = -1;
+[PTBR+15] = "0000";
+
+//Stack
+[PTBR+16] = 86;
+[PTBR+17] = "0110";
+[PTBR+18] = 87;
+[PTBR+19] = "0110";
+
 // PROCESS TABLE FOR INIT
 
 [PROCESS_TABLE+16 + 11] = 80;
@@ -71,5 +113,24 @@ PTLR = 10;
 [PROCESS_TABLE+16 + 14] = PAGE_TABLE_BASE+20;
 [PROCESS_TABLE+16 + 15] = 10;
 
+// PROCESS TABLE FOR User Program
+
+[PROCESS_TABLE+16 + 11] = 88;
+[PROCESS_TABLE+16 + 1] = 2;
+[PROCESS_TABLE+16 + 4] = CREATED;
+[PROCESS_TABLE+16 + 13] = 8*512;
+[PROCESS_TABLE+16 + 12] = 0;
+[PROCESS_TABLE+16 + 14] = PAGE_TABLE_BASE+40;
+[PROCESS_TABLE+16 + 15] = 10;
+
+alias counter R0;
+counter = 3;
+while(counter <= 15) do
+  [PROCESS_TABLE + (counter * 16) + 4] = TERMINATED;
+  counter = counter + 1;
+endwhile; 
+
+[86*512] = [83 * 512 + 1];
 [76*512] = [65 * 512 + 1];
+breakpoint;
 return;

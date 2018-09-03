@@ -1,0 +1,50 @@
+alias currentPID R0;
+currentPID = [SYSTEM_STATUS_TABLE + 1];
+
+// Correct????
+
+// SP = SP+1;
+// [SP] = BP;
+
+//
+
+alias process_table_entry R1;
+process_table_entry = PROCESS_TABLE + currentPID * 16;
+
+[process_table_entry + 12] = SP % 512;
+[process_table_entry + 14] = PTBR;
+[process_table_entry + 15] = PTLR;
+
+alias newPID R3;
+alias count R2;
+count = 1;
+newPID = currentPID + 1;
+while((count <= 16) && ([PROCESS_TABLE + (newPID*16) + 4] == TERMINATED)) do
+	newPID = ((newPID + 1)%16);
+	count = count + 1;
+endwhile;
+
+if(count == 17) then
+	newPID = 0;
+endif;
+
+alias new_process_table R4;
+new_process_table = PROCESS_TABLE + newPID * 16;
+
+//Set back Kernel SP, PTBR , PTLR
+SP =  [new_process_table + 11] * 512 + [new_process_table + 12] ;
+PTBR = [new_process_table + 14];
+PTLR = [new_process_table + 15];
+[SYSTEM_STATUS_TABLE + 1] = newPID;
+
+if([new_process_table + 4] == CREATED) then
+	[new_process_table + 4] = RUNNING;
+	SP = [new_process_table + 13];
+	[new_process_table + 9] = 0;
+	ireturn;
+endif;
+
+[new_process_table + 4] = RUNNING;
+// BP = [SP];
+// SP = SP - 1;
+return;

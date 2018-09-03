@@ -1,0 +1,20 @@
+[PROCESS_TABLE + ([SYSTEM_STATUS_TABLE + 1]*16) + 4] = TERMINATED;
+
+alias newPID R2;
+alias counter R3;
+counter=0;
+alias currentPID R0;
+currentPID = [SYSTEM_STATUS_TABLE + 1];
+newPID = [SYSTEM_STATUS_TABLE + 1] + 1;
+while(counter<=15) do
+	if((newPID != 0) && ([PROCESS_TABLE + (newPID*16) +4] != TERMINATED)) then
+	break;
+	endif;
+	counter = counter + 1;
+	newPID = (newPID + 1)%16;
+endwhile;
+if(counter == 16) then
+halt;
+else
+call MOD_5;
+endif;
