@@ -27,6 +27,16 @@ loadi(3, 16);
 loadi(50,63);
 loadi(51,64);
 
+// MODULE 0
+
+loadi(40,53);
+loadi(41,54);
+
+// MODULE 4
+
+loadi(61,48);
+loadi(62,49);
+
 // Library Code
 
 loadi(63,13);
@@ -134,5 +144,7 @@ endwhile;
 
 [86*512] = [83 * 512 + 1];
 [76*512] = [65 * 512 + 1];
-breakpoint;
+
+[TERMINAL_STATUS_TABLE + 0] = 0;
+
 return;
