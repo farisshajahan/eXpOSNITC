@@ -12,23 +12,23 @@ if(functionNum == 8)then
 	[TERMINAL_STATUS_TABLE + 0] = 1;
 	[TERMINAL_STATUS_TABLE + 1] = currentPID;
 	return;
-else
+endif;
 
-	if(functionNum == 9)then
-		if(currentPID != [TERMINAL_STATUS_TABLE + 1]) then
-			R0 = -1;
-			return;
-		else
-			[TERMINAL_STATUS_TABLE + 0] = 0;
-			alias counter R6;
-			counter = 0;
-				while(counter <= 15) do
-					if([PROCESS_TABLE + (counter*16) + 4] == WAIT_TERMINAL) then
-						[PROCESS_TABLE + (counter*16) + 4] = READY;
-					endif;
-				endwhile;
-			R0 = 0;
-			return;
-		endif;
+if(functionNum == 9)then
+	if(currentPID != [TERMINAL_STATUS_TABLE + 1]) then
+		R0 = -1;
+		return;
+	else
+		[TERMINAL_STATUS_TABLE + 0] = 0;
+		alias counter R6;
+		counter = 1;
+			while(counter <= 15) do
+				if([PROCESS_TABLE + (counter*16) + 4] == WAIT_TERMINAL) then
+					[PROCESS_TABLE + (counter*16) + 4] = READY;
+				endif;
+				counter = counter + 1;
+			endwhile;
+		R0 = 0;
+		return;
 	endif;
 endif;

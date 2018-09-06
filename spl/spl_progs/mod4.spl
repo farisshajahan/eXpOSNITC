@@ -1,20 +1,33 @@
 alias functionNum R1;
 alias currentPID R2;
 if(functionNum == 3) then
-	multipush(R1,R2);
+	multipush(R1,R2,R3);
 	R1 = 8;
 	R2 = [SYSTEM_STATUS_TABLE + 1];
 	call MOD_0;
-	multipop(R1,R2);
+	multipop(R1,R2,R3);
 	print R3;
 
-	multipush(R1,R2);
+	multipush(R1,R2,R3);
 	R1 = 9;
 	R2 = [SYSTEM_STATUS_TABLE + 1];
 	call MOD_0;
-	multipop(R1,R2);
-
+	multipop(R1,R2,R3);
 	return;
-else
-return;
+endif;
+if(functionNum == 4) then
+	multipush(R1,R2,R3);
+	R1 = 8;
+	R2 = [SYSTEM_STATUS_TABLE + 1];
+	call MOD_0;
+	multipop(R1,R2,R3);
+	read;
+	[PROCESS_TABLE + [SYSTEM_STATUS_TABLE + 1]*16 + 4] = WAIT_TERMINAL;
+	multipush(R1,R2,R3);
+	call MOD_5;
+	multipop(R1,R2,R3);
+	alias physicalAddStorage R4;
+	physicalAddStorage = [PTBR + (2*R3)/512]*512 + R3%512;
+	[physicalAddStorage] = [PROCESS_TABLE + [SYSTEM_STATUS_TABLE +1]*16 + 8];
+	return;
 endif;
