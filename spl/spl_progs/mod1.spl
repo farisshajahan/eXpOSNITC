@@ -1,0 +1,107 @@
+alias functionNum R1;
+alias PID R2;
+
+if(functionNum == 2) then
+	multipush(R1,R2);
+	R1 = 2;
+	R2 = [PROCESS_TABLE + PID*16 + 11];
+	call MOD_2;
+	multipop(R1,R2);
+	return;
+endif;
+
+if(functionNum == 3) then
+	multipush(R1,R2);
+	R1 = 4;
+	R2 = PID;
+	call MOD_1;
+	multipop(R1,R2);
+	multipush(R1,R2);
+	R1 = 2;
+	R2 = PID;
+	call MOD_1;
+	multipop(R1,R2);
+	[PROCESS_TABLE + PID*16 + 4] = TERMINATED;
+	return;
+endif;
+
+if(functionNum == 4) then
+	PTBR = PAGE_TABLE_BASE + R2*20;
+	[PTBR + 0] = -1;
+	[PTBR + 1] = "0000";
+	[PTBR + 2] = -1;
+	[PTBR + 3] = "0000";
+	if([PTBR + 4] != -1) then
+		multipush(R1,R2);
+		R1 = 2;
+		R2 = [PTBR + 4];
+		call MOD_2;
+		multipop(R1,R2);
+		[PTBR + 4] = -1;
+		[PTBR + 5] = "0000";
+	endif;
+	if([PTBR + 6] != -1) then
+		multipush(R1,R2);
+		R1 = 2;
+		R2 = [PTBR + 6];
+		call MOD_2;
+		multipop(R1,R2);
+		[PTBR + 6] = -1;
+		[PTBR + 7] = "0000";
+	endif;
+	if([PTBR + 8] != -1) then
+		multipush(R1,R2);
+		R1 = 2;
+		R2 = [PTBR + 8];
+		call MOD_2;
+		multipop(R1,R2);
+		[PTBR + 8] = -1;
+		[PTBR + 9] = "0000";
+	endif;
+	if([PTBR + 10] != -1) then
+		multipush(R1,R2);
+		R1 = 2;
+		R2 = [PTBR + 10];
+		call MOD_2;
+		multipop(R1,R2);
+		[PTBR + 10] = -1;
+		[PTBR + 11] = "0000";
+	endif;
+	if([PTBR + 12] != -1) then
+		multipush(R1,R2);
+		R1 = 2;
+		R2 = [PTBR + 12];
+		call MOD_2;
+		multipop(R1,R2);
+		[PTBR + 12] = -1;
+		[PTBR + 13] = "0000";
+	endif;
+	if([PTBR + 14] != -1) then
+		multipush(R1,R2);
+		R1 = 2;
+		R2 = [PTBR + 14];
+		call MOD_2;
+		multipop(R1,R2);
+		[PTBR + 14] = -1;
+		[PTBR + 15] = "0000";
+	endif;
+	if([PTBR + 16] != -1) then
+		multipush(R1,R2);
+		R1 = 2;
+		R2 = [PTBR + 16];
+		call MOD_2;
+		multipop(R1,R2);
+		[PTBR + 16] = -1;
+		[PTBR + 17] = "0000";
+	endif;
+	if([PTBR + 18] != -1) then
+		multipush(R1,R2);
+		R1 = 2;
+		R2 = [PTBR + 18];
+		call MOD_2;
+		multipop(R1,R2);
+		[PTBR + 18] = -1;
+		[PTBR + 19] = "0000";
+	endif;
+	return;
+endif;

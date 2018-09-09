@@ -1,57 +1,83 @@
-// INIT Program
+// --------INIT Program----------
 
 loadi(65,7);
 loadi(66,8);
 
-// INT10
-
-loadi(22,35);
-loadi(23,36);
+// ---------Interrupts-----------
 
 // INT 6
 
 loadi(14,27);
 loadi(15,28);
 
-// Console Interrupt
-
-loadi(8,21);
-loadi(9,22);
-
 // INT7
 
 loadi(16,29);
 loadi(17,30);
 
-// Exception Handler
+// INT 9
+
+loadi(20,33);
+loadi(21,34);
+
+// INT10
+
+loadi(22,35);
+loadi(23,36);
+
+// Timer Interrupt
+
+loadi(4, 17);
+loadi(5, 18);
+
+// Console Interrupt
+
+loadi(8,21);
+loadi(9,22);
+
+// -------Exception Handler--------
 
 loadi(2, 15);
 loadi(3, 16);
 
-// MODULE 5
-
-loadi(50,63);
-loadi(51,64);
+// ------------Modules-------------
 
 // MODULE 0
 
 loadi(40,53);
 loadi(41,54);
 
+// MODULE 1
+
+loadi(42,55);
+loadi(43,56);
+
+// MODULE 2
+
+loadi(44,57);
+loadi(45,58);
+
 // MODULE 4
 
 loadi(48,61);
 loadi(49,62);
 
-// Library Code
+// MODULE 5
+
+loadi(50,63);
+loadi(51,64);
+
+// ----------Library Code-----------
 
 loadi(63,13);
 loadi(64,14);
 
-// Timer Interrupt
+// ----------Inode Table-----------
 
-loadi(4, 17);
-loadi(5, 18);
+loadi(59,3);
+loadi(60,4);
+
+// ----------Page Table Setup------------
 
 // PAGE TABLE FOR INIT
 
@@ -86,6 +112,8 @@ PTLR = 10;
 [PTBR+18] = 77;
 [PTBR+19] = "0110";
 
+// ------------------Process Table Setup----------------
+
 // PROCESS TABLE FOR INIT
 
 [PROCESS_TABLE+16 + 11] = 80;
@@ -103,8 +131,26 @@ while(counter <= 15) do
   counter = counter + 1;
 endwhile; 
 
+// --------------------Entry Points---------------------
+
 [76*512] = [65 * 512 + 1];
 
+// --------------------Initial Setup--------------------
+
 [TERMINAL_STATUS_TABLE + 0] = 0;
+
+counter = 0;
+while(counter <= 82) do
+	[MEMORY_FREE_LIST + counter] = 1;
+	counter = counter + 1;
+endwhile;
+
+while(counter <= 127) do
+	[MEMORY_FREE_LIST + counter] = 0;
+	counter = counter + 1;
+endwhile;
+
+[SYSTEM_STATUS_TABLE + 3] = 0;
+[SYSTEM_STATUS_TABLE + 2] = 45;
 
 return;

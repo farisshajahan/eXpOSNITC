@@ -12,8 +12,6 @@ loadi(55,68);
 
 call MOD_7;
 
-breakpoint;
-
 // PAGE TABLE FOR IDLE
 
 PTBR=PAGE_TABLE_BASE;  //as PID of idle process is 0
