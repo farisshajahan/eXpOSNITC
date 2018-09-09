@@ -1,42 +1,45 @@
 #!/bin/bash
 cd $HOME/myexpos/spl
-echo .......Compiling Interrupts........
-echo INT6....
+echo ".......Compiling Interrupts........"
+echo "INT6...."
 ./spl spl_progs/int6.spl
-echo INT7....
+echo "INT7...."
 ./spl spl_progs/int7.spl
-echo INT9....
+echo "INT9...."
 ./spl spl_progs/int9.spl
-echo INT10....
+echo "INT10...."
 ./spl spl_progs/int10.spl
-echo TIMER....
+echo "TIMER...."
 ./spl spl_progs/contextswitchtimer.spl
-echo CONSOLE INTERRUPT....
+echo "DISK INTERRUPT...."
+./spl spl_progs/intdisk.spl
+echo "CONSOLE INTERRUPT...."
 ./spl spl_progs/intconsole.spl
 echo
 echo
-echo .........Compiling OS Code..........
+echo ".........Compiling OS Code.........."
 ./spl spl_progs/osstartup.spl
 echo
 echo
-echo ........Compiling Modules.........
-echo MOD0....
+echo "........Compiling Modules........."
+echo "MOD0...."
 ./spl spl_progs/mod0.spl
-echo MOD1....
+echo "MOD1...."
 ./spl spl_progs/mod1.spl
-echo MOD2....
+echo "MOD2...."
 ./spl spl_progs/mod2.spl
-echo MOD4....
+echo "MOD4...."
 ./spl spl_progs/mod4.spl
-echo MOD5....
+echo "MOD5...."
 ./spl spl_progs/mod5.spl
-echo MOD7....
+echo "MOD7...."
 ./spl spl_progs/mod7.spl
 
 cd $HOME/myexpos/xfs-interface
 ./xfs-interface load --os ../spl/spl_progs/osstartup.xsm
 ./xfs-interface load --int=timer ../spl/spl_progs/contextswitchtimer.xsm
 ./xfs-interface load --int=console ../spl/spl_progs/intconsole.xsm
+./xfs-interface load --int=disk ../spl/spl_progs/intdisk.xsm
 ./xfs-interface load --int=6 ../spl/spl_progs/int6.xsm
 ./xfs-interface load --int=7 ../spl/spl_progs/int7.xsm
 ./xfs-interface load --int=9 ../spl/spl_progs/int9.xsm

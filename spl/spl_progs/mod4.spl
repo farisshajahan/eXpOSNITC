@@ -1,5 +1,19 @@
 alias functionNum R1;
 alias currentPID R2;
+if(functionNum == 2) then
+	multipush(R1,R2,R3,R4,R5);
+	R1 = 3;
+	call MOD_0;
+	multipop(R1,R2,R3,R4,R5);
+	[DISK_STATUS_TABLE]=1;
+	[DISK_STATUS_TABLE + 4]=R2;
+	load(R3,R4);
+	[PROCESS_TABLE + R2*16 + 4] = WAIT_DISK;
+	multipush(R1,R2,R3,R4,R5);
+	call MOD_5;
+	multipop(R1,R2,R3,R4,R5);
+	return;
+endif;
 if(functionNum == 3) then
 	multipush(R1,R2,R3);
 	R1 = 8;

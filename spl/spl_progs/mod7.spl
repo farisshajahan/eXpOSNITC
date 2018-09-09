@@ -30,6 +30,11 @@ loadi(23,36);
 loadi(4, 17);
 loadi(5, 18);
 
+// Disk Interrupt
+
+loadi(6,19);
+loadi(7,20);
+
 // Console Interrupt
 
 loadi(8,21);
@@ -152,5 +157,7 @@ endwhile;
 
 [SYSTEM_STATUS_TABLE + 3] = 0;
 [SYSTEM_STATUS_TABLE + 2] = 45;
+
+[DISK_STATUS_TABLE] = 0;
 
 return;
