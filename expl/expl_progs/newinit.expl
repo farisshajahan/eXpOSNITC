@@ -8,6 +8,7 @@ begin
 	temp=exposcall("Read",-1,filename);
 	breakpoint;
 	temp=exposcall("Exec",filename);
+	write(temp);
 	return 0;
 end
 }

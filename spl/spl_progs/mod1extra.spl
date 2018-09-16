@@ -1,0 +1,44 @@
+if([DISK_MAP_TABLE + PID*10 + 2] != -1) then
+		multipush(R1,R2,R3,R4);
+		R1 = 4;
+		R3 = PID;
+		R2 = [DISK_MAP_TABLE + PID*10 + 2];
+		call MOD_2;
+		multipop(R1,R2,R3,R4);
+	endif;
+	
+	if([DISK_MAP_TABLE + PID*10 + 3] != -1) then
+		multipush(R1,R2,R3,R4);
+		R1 = 4;
+		R3 = PID;
+		R2 = [DISK_MAP_TABLE + PID*10 + 3];
+		call MOD_2;
+		multipop(R1,R2,R3,R4);
+	endif;
+
+	if([DISK_MAP_TABLE + PID*10 + 8] != -1) then
+		multipush(R1,R2,R3,R4);
+		R1 = 4;
+		R3 = PID;
+		R2 = [DISK_MAP_TABLE + PID*10 + 8];
+		call MOD_2;
+		multipop(R1,R2,R3,R4);
+	endif;
+
+	if([DISK_MAP_TABLE + PID*10 + 9] != -1) then
+		multipush(R1,R2,R3,R4);
+		R1 = 4;
+		R3 = PID;
+		R2 = [DISK_MAP_TABLE + PID*10 + 9];
+		call MOD_2;
+		multipop(R1,R2,R3,R4);
+	endif;
+
+	alias counter R6;
+
+	counter = 0;
+
+	while(counter < 10) do
+		[DISK_MAP_TABLE + PID*10 + counter] = -1;
+	endwhile;
+

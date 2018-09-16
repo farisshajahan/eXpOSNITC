@@ -1,0 +1,20 @@
+type
+node
+{
+	int x;
+}
+endtype
+int main()
+{
+decl
+	int temp;
+	node b;
+enddecl
+begin
+	temp=initialize();
+	b=alloc();
+	read(b.x);
+	write(b.x);
+	return 0;
+end
+}

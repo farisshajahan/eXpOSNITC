@@ -1,7 +1,7 @@
 #!/bin/bash
 cd $HOME/myexpos/spl
 echo ".......Exception Handler..........."
-./spl spl_progs/haltprog.spl
+./spl spl_progs/exhandler.spl
 echo ".......Compiling Interrupts........"
 echo "INT6...."
 ./spl spl_progs/int6.spl
@@ -39,7 +39,7 @@ echo "MOD7...."
 
 cd $HOME/myexpos/xfs-interface
 ./xfs-interface load --library ../expl/library.lib
-./xfs-interface load --exhandler ../spl/spl_progs/haltprog.xsm
+./xfs-interface load --exhandler ../spl/spl_progs/exhandler.xsm
 ./xfs-interface load --os ../spl/spl_progs/osstartup.xsm
 ./xfs-interface load --int=timer ../spl/spl_progs/contextswitchtimer.xsm
 ./xfs-interface load --int=console ../spl/spl_progs/intconsole.xsm

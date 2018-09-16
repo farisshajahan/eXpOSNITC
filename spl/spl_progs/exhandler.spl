@@ -1,0 +1,57 @@
+// ===============Switching to kernel mode==================
+
+[PROCESS_TABLE + ( [SYSTEM_STATUS_TABLE + 1] * 16) + 13] = SP;
+alias userSP R3;
+userSP = SP;
+
+breakpoint;
+
+SP = [PROCESS_TABLE + [SYSTEM_STATUS_TABLE + 1]*16 + 11]*512-1;
+
+backup;
+
+// ===================Check EC=======================
+
+if(EC != 0) then
+	R7 = "Exception Other than page fault occured";
+	print R7;
+	multipush(R1,R2,R3,R4);
+	R1 = 3;
+	R2 = [SYSTEM_STATUS_TABLE + 1];
+	call MOD_1;
+	multipop(R1,R2,R3,R4);
+
+	call MOD_5;
+else
+	if((EPN >3) && (EPN<8)) then
+
+		// Exception is due to code page
+
+		multipush(R1,R2,R3,R4,R5);
+		R1 = 5;
+		R2 = [DISK_MAP_TABLE + EPN];
+		call MOD_2;
+		[PAGE_TABLE_BASE + [SYSTEM_STATUS_TABLE + 1]*20 + EPN*2] = R0;
+		[PAGE_TABLE_BASE + [SYSTEM_STATUS_TABLE + 1]*20 + EPN*2 + 1] = "1100";
+		multipop(R1,R2,R3,R4,R5);
+	else
+		if((EPN==2)||(EPN==3)) then
+
+			// Exception due to heap
+
+			multipush(R1,R2,R3,R4,R5);
+			R1 = 1;
+			call MOD_2;
+			[PAGE_TABLE_BASE + [SYSTEM_STATUS_TABLE + 1]*20 + EPN*2] = R0;
+			[PAGE_TABLE_BASE + [SYSTEM_STATUS_TABLE + 1]*20 + EPN*2 + 1] = "1110";
+			multipop(R1,R2,R3,R4,R5);
+		endif;
+	endif;
+endif;
+
+// ===================Change to user mode====================
+
+[PROCESS_TABLE + [SYSTEM_STATUS_TABLE + 1] * 16 + 9] = 0;
+restore;
+SP = [PROCESS_TABLE + ( [SYSTEM_STATUS_TABLE + 1] * 16) + 13];
+ireturn;
