@@ -5,7 +5,6 @@ decl
 enddecl
 begin
 a=1;
-breakpoint;
 while ( a<=100 ) do
 	if ((a%2)==0) then
 	temp = exposcall ( "Write" , -2, a );

@@ -1,14 +1,15 @@
 int main()
 {
 decl
-	str filename;
-	int temp;
+	int temp,a;
 enddecl
 begin
-	temp=exposcall("Read",-1,filename);
-	breakpoint;
-	temp=exposcall("Exec",filename);
-	write(temp);
+	temp=exposcall("Fork");
+	if(temp == 0) then
+		a = exposcall("Exec","oddno.xsm");
+	else
+		a = exposcall("Exec","evenno.xsm");
+	endif;
 	return 0;
 end
 }

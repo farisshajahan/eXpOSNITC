@@ -10,10 +10,15 @@ loadi(66,8);
 loadi(14,27);
 loadi(15,28);
 
-// INT7
+// INT 7
 
 loadi(16,29);
 loadi(17,30);
+
+// INT 8
+
+loadi(18,31);
+loadi(19,32);
 
 // INT 9
 

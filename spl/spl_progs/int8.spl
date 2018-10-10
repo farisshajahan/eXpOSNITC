@@ -1,0 +1,109 @@
+alias userSP R6;
+userSP = SP;
+[PROCESS_TABLE + [SYSTEM_STATUS_TABLE + 1]*16 + 13] = SP;
+SP = [PROCESS_TABLE + [SYSTEM_STATUS_TABLE + 1]*16 + 11]*512 - 1;
+
+
+[PROCESS_TABLE + [SYSTEM_STATUS_TABLE + 1]*16 + 9] = 8;
+
+multipush(R6);
+
+R1 = 1;
+call MOD_1;
+
+multipop(R6);
+
+if(R0 == -1) then
+	[[PAGE_TABLE_BASE + [SYSTEM_STATUS_TABLE + 1]*20 + 2*(userSP - 1)/512] * 512 + (userSP - 1)%512] = -1;
+	SP = userSP;
+	ireturn;
+endif;
+
+alias newPID R7;
+
+newPID = R0;
+
+multipush(R7);
+
+R1 = 1;
+call MOD_2;
+
+multipop(R7);
+multipush(R7);
+
+[PAGE_TABLE_BASE + newPID*20 + 16] = R0;
+[PAGE_TABLE_BASE + newPID*20 + 17] = "0110";
+
+R1 = 1;
+call MOD_2;
+
+multipop(R7);
+
+[PAGE_TABLE_BASE + newPID*20 + 18] = R0;
+[PAGE_TABLE_BASE + newPID*20 + 19] = "0110";
+
+[PROCESS_TABLE + newPID*16 + 3] = [PROCESS_TABLE + [SYSTEM_STATUS_TABLE + 1]*16 + 3];
+[PROCESS_TABLE + newPID*16 + 6] = [PROCESS_TABLE + [SYSTEM_STATUS_TABLE + 1]*16 + 6];
+[PROCESS_TABLE + newPID*16 + 10] = [PROCESS_TABLE + [SYSTEM_STATUS_TABLE + 1]*16 + 10];
+[PROCESS_TABLE + newPID*16 + 7] = [PROCESS_TABLE + [SYSTEM_STATUS_TABLE + 1]*16 + 7];
+[PROCESS_TABLE + newPID*16 + 13] = [PROCESS_TABLE + [SYSTEM_STATUS_TABLE + 1]*16 + 13];
+[PROCESS_TABLE + newPID*16 + 0] = 0;
+[PROCESS_TABLE + newPID*16 + 9] = 0;
+[PROCESS_TABLE + newPID*16 + 12] = 0;
+[PROCESS_TABLE + newPID*16 + 4] = CREATED;
+
+multipush(R7);
+
+R1 = 1;
+call MOD_2;
+
+multipop(R7);
+
+[PROCESS_TABLE + newPID*16 + 11] = R0;
+
+[PROCESS_TABLE + newPID*16 + 2] = [SYSTEM_STATUS_TABLE + 1];
+
+alias counter R8;
+
+counter = 0;
+
+while(counter < 10) do
+	[DISK_MAP_TABLE + newPID*10 + counter] = [DISK_MAP_TABLE + [SYSTEM_STATUS_TABLE + 1]*10 + counter];
+	counter = counter + 1;
+endwhile;
+
+counter = 0;
+
+while(counter < 16) do
+	[PAGE_TABLE_BASE + newPID*20 + counter] = [PAGE_TABLE_BASE + [SYSTEM_STATUS_TABLE + 1]*20 + counter];
+	if(((counter%2) == 0) && ([PAGE_TABLE_BASE + newPID*20 + counter] != -1)) then
+		[MEMORY_FREE_LIST + [PAGE_TABLE_BASE + newPID*20 + counter]] = [MEMORY_FREE_LIST + [PAGE_TABLE_BASE + newPID*20 + counter]] + 1;
+	endif;
+	counter = counter + 1;
+endwhile;
+
+[PAGE_TABLE_BASE + newPID*20 + 17] = [PAGE_TABLE_BASE + [SYSTEM_STATUS_TABLE + 1]*20 + 17];
+[PAGE_TABLE_BASE + newPID*20 + 19] = [PAGE_TABLE_BASE + [SYSTEM_STATUS_TABLE + 1]*20 + 19];
+
+counter = 0;
+
+// EDIT HERE UPON INSERTION OF PER PROCESS RESOURCE PROCESS_TABLE
+
+while(counter < 512) do
+	[[PAGE_TABLE_BASE + newPID*20 + 16]*512 + counter] = [[PAGE_TABLE_BASE + [SYSTEM_STATUS_TABLE + 1]*20 + 16]*512 + counter];
+	[[PAGE_TABLE_BASE + newPID*20 + 18]*512 + counter] = [[PAGE_TABLE_BASE + [SYSTEM_STATUS_TABLE + 1]*20 + 18]*512 + counter];
+	counter = counter + 1;
+endwhile;
+
+[[PROCESS_TABLE + newPID*16 + 11]*512] = BP;
+
+[[PAGE_TABLE_BASE + [SYSTEM_STATUS_TABLE + 1]*20 + 2*(userSP - 1)/512] * 512 + (userSP - 1)%512] = newPID;
+[[PAGE_TABLE_BASE + newPID*20 + 2*(userSP - 1)/512] * 512 + (userSP - 1)%512] = 0;
+
+breakpoint;
+
+[PROCESS_TABLE + [SYSTEM_STATUS_TABLE + 1]*16 + 9] = 0;
+breakpoint;
+SP = userSP;
+breakpoint;
+ireturn;

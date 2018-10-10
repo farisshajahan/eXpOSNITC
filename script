@@ -7,6 +7,8 @@ echo "INT6...."
 ./spl spl_progs/int6.spl
 echo "INT7...."
 ./spl spl_progs/int7.spl
+echo "INT8...."
+./spl spl_progs/int8.spl
 echo "INT9...."
 ./spl spl_progs/int9.spl
 echo "INT10...."
@@ -46,6 +48,7 @@ cd $HOME/myexpos/xfs-interface
 ./xfs-interface load --int=disk ../spl/spl_progs/intdisk.xsm
 ./xfs-interface load --int=6 ../spl/spl_progs/int6.xsm
 ./xfs-interface load --int=7 ../spl/spl_progs/int7.xsm
+./xfs-interface load --int=8 ../spl/spl_progs/int8.xsm
 ./xfs-interface load --int=9 ../spl/spl_progs/int9.xsm
 ./xfs-interface load --int=10 ../spl/spl_progs/int10.xsm
 ./xfs-interface load --module 0 ../spl/spl_progs/mod0.xsm
