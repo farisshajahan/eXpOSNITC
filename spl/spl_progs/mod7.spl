@@ -30,6 +30,16 @@ loadi(21,34);
 loadi(22,35);
 loadi(23,36);
 
+// INT11
+
+loadi(24,37);
+loadi(25,38);
+
+// INT15
+
+loadi(32,45);
+loadi(33,46);
+
 // Timer Interrupt
 
 loadi(4, 17);

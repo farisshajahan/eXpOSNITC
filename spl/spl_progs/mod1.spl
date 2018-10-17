@@ -32,6 +32,23 @@ if(functionNum == 2) then
 endif;
 
 if(functionNum == 3) then
+	if([PROCESS_TABLE + PID*16 + 9]!=9)
+	then
+		alias counter R9;
+		counter = 0;
+		while(counter<16)
+		do
+			if(([PROCESS_TABLE + counter*16 + 4]==WAIT_PROCESS) && ([PROCESS_TABLE + counter*16 + 5]==PID))
+			then
+				[PROCESS_TABLE + counter*16 + 4] = READY;
+			endif;
+			if([PROCESS_TABLE + counter*16 + 2]==PID)
+			then
+				[PROCESS_TABLE + counter*16 + 2] = -1;
+			endif;
+			counter = counter + 1;
+		endwhile;
+	endif;
 	multipush(R1,R2);
 	R1 = 4;
 	R2 = PID;

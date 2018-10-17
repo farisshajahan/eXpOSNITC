@@ -1,0 +1,23 @@
+int main()
+{
+decl
+          int temp, pid;
+          string a;
+          string input;
+enddecl
+begin
+	while(1==1)
+	do
+		read(input);
+          pid = exposcall("Fork");
+          if(pid == 0)
+          then
+          	temp = exposcall("Exec",input);
+          else
+          	temp = exposcall("Wait",pid);
+          	write("Hello");
+          endif;
+    endwhile;
+    return 0;
+end
+}

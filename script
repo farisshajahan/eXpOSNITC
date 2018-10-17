@@ -13,6 +13,10 @@ echo "INT9...."
 ./spl spl_progs/int9.spl
 echo "INT10...."
 ./spl spl_progs/int10.spl
+echo "INT11...."
+./spl spl_progs/int11.spl
+echo "INT15...."
+./spl spl_progs/int15.spl
 echo "TIMER...."
 ./spl spl_progs/contextswitchtimer.spl
 echo "DISK INTERRUPT...."
@@ -51,6 +55,8 @@ cd $HOME/myexpos/xfs-interface
 ./xfs-interface load --int=8 ../spl/spl_progs/int8.xsm
 ./xfs-interface load --int=9 ../spl/spl_progs/int9.xsm
 ./xfs-interface load --int=10 ../spl/spl_progs/int10.xsm
+./xfs-interface load --int=11 ../spl/spl_progs/int11.xsm
+./xfs-interface load --int=15 ../spl/spl_progs/int15.xsm
 ./xfs-interface load --module 0 ../spl/spl_progs/mod0.xsm
 ./xfs-interface load --module 1 ../spl/spl_progs/mod1.xsm
 ./xfs-interface load --module 2 ../spl/spl_progs/mod2.xsm
